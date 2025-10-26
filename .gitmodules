@@ -1,0 +1,3 @@
+[submodule "pdfjs-annotation-extension-src"]
+	path = pdfjs-annotation-extension-src
+	url = https://github.com/tommyfgj/pdfjs-annotation-extension.git

@@ -1,0 +1,57 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+.yarn/install-state.gz
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env*.local
+.env
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# temporary documentation files
+AI_CHAT_INTEGRATION.md
+CHAT_INTEGRATION.md
+CHECKLIST.md
+INTEGRATION.md
+ORIGINAL_TEXT_TAG_FEATURE.md
+PDF_PARSE_INTEGRATION.md
+QUICKSTART.md
+QUICKSTART_AI_CHAT.md
+SUMMARY.md
+TEST_ORIGINAL_TEXT_TAG.md
+test-sidebar-toggle.html
+
+# temporary files
+package.tmp.json
+annotations.db
+
+# lock files
+package-lock.json
