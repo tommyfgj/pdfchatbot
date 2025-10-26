@@ -25,6 +25,18 @@
 
 ## 🚀 快速开始
 
+### 0. 克隆项目（包含 submodule）
+
+```bash
+# 克隆项目并初始化 submodule
+git clone --recursive https://github.com/tommyfgj/pdfchatbot.git
+
+# 或者先克隆，再初始化 submodule
+git clone https://github.com/tommyfgj/pdfchatbot.git
+cd pdfchatbot
+git submodule update --init --recursive
+```
+
 ### 1. 安装依赖
 
 ```bash
@@ -93,26 +105,33 @@ pnpm dev
 ```
 pdfchatbot/
 ├── app/
-│   ├── api/chat/                      # AI 聊天 API 路由
+│   ├── api/
+│   │   ├── chat/                      # AI 聊天 API 路由
+│   │   └── annotations/               # 批注存储 API
 │   ├── globals.css                    # 全局样式
 │   ├── layout.tsx                     # 根布局
 │   └── page.tsx                       # 主页面
 ├── components/
 │   ├── PDFViewerIframe.tsx            # PDF Viewer 组件（iframe 方式）
 │   └── ChatPanel.tsx                  # 聊天面板组件
+├── pdfjs-annotation-extension-src/   # 📦 Submodule: PDF 批注扩展源码
+│   ├── src/                           # 扩展源代码
+│   ├── configuration/                 # Webpack 配置
+│   └── examples/                      # 示例文件
 ├── public/
 │   ├── web/                           # PDF.js viewer 完整文件
 │   │   ├── viewer.html                # 主 viewer（已集成 annotation）
 │   │   ├── viewer.mjs                 # Viewer 逻辑
 │   │   ├── text-selection-bridge.js   # 文本选择桥接
 │   │   └── ...
-│   ├── pdfjs-annotation-extension/    # 批注扩展
+│   ├── pdfjs-annotation-extension/    # 批注扩展编译产物
 │   │   ├── pdfjs-annotation-extension.js
 │   │   └── font/
 │   └── build/                         # PDF.js 核心库
 ├── lib/
 │   └── ai-config.ts                   # AI 配置
 ├── .env.example                       # 环境变量示例
+├── .gitmodules                        # Git submodule 配置
 ├── SETUP.md                           # 详细集成说明
 └── README.md
 ```
