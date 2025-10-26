@@ -22,5 +22,6 @@ cd "$ROOT_DIR"
 [ -d public ] || { echo "[error] public not found"; exit 1; }
 
 export PORT NODE_ENV
-# Run from repo root so Next can find public/ and .next/static
-exec node .next/standalone/server.js
+# Run inside standalone directory; server.js chdir here, so static/public must live under it
+cd .next/standalone
+exec node server.js
