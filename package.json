@@ -6,11 +6,13 @@
     "pdfjs-annotation-extension-src"
   ],
   "scripts": {
-    "dev": "zsh -lc 'source ~/.nvm/nvm.sh && nvm use lts/iron && concurrently \"npm --workspace pdfjs-annotation-extension-src run dev\" \"next dev\"'",
+    "dev": "concurrently \"npm --workspace pdfjs-annotation-extension-src run dev\" \"next dev\"",
     "dev:web": "next dev",
     "dev:extension": "npm --workspace pdfjs-annotation-extension-src run dev",
     "build": "npm --workspace pdfjs-annotation-extension-src run build && next build",
     "start": "next start",
+    "start:standalone": "NODE_ENV=production node .next/standalone/server.js",
+    "postbuild": "node -e \"const fs=require('fs'); if(!fs.existsSync('.next/standalone')){process.exit(1)}\"",
     "lint": "next lint"
   },
   "dependencies": {

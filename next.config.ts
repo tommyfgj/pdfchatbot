@@ -1,6 +1,7 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
+  output: 'standalone',
   webpack: (config) => {
     // 禁用 canvas 以避免 PDF.js 在服务端渲染时出错
     config.resolve.alias.canvas = false;
