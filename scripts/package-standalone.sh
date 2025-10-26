@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Usage:
+#   bash scripts/package-standalone.sh [OUTPUT_DIR]
+# Example:
+#   bash scripts/package-standalone.sh dist
+# Result:
+#   Creates dist/pdfchatbot-standalone-YYYYmmdd_HHMMSS.tar.gz with:
+#     .next/standalone/
+#     .next/static/
+#     public/
+#     scripts/run-standalone.sh
+
+ROOT_DIR=$(cd "$(dirname "$0")/.." && pwd)
+OUTPUT_DIR=${1:-"$ROOT_DIR/dist"}
+TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+PACKAGE_NAME="pdfchatbot-standalone-$TIMESTAMP.tar.gz"
+
+cd "$ROOT_DIR"
+
+# 1) Build project (submodule + Next standalone)
+echo "[package] Building project (standalone)..."
+npm run build
+
+# 2) Verify required directories
+[ -d .next/standalone ] || { echo "[error] .next/standalone not found"; exit 1; }
+[ -d .next/static ] || { echo "[error] .next/static not found"; exit 1; }
+[ -d public ] || { echo "[error] public not found"; exit 1; }
+
+# 3) Prepare output directory
+mkdir -p "$OUTPUT_DIR"
+
+# 4) Create tarball including run script
+TMP_STAGE="$(mktemp -d)"
+mkdir -p "$TMP_STAGE/.next" "$TMP_STAGE/scripts"
+cp -a .next/standalone "$TMP_STAGE/.next/standalone"
+cp -a .next/static "$TMP_STAGE/.next/static"
+cp -a public "$TMP_STAGE/public"
+# include run script
+cp -a scripts/run-standalone.sh "$TMP_STAGE/scripts/run-standalone.sh"
+chmod +x "$TMP_STAGE/scripts/run-standalone.sh"
+
+# 5) Package
+cd "$TMP_STAGE"
+tar -czf "$OUTPUT_DIR/$PACKAGE_NAME" .next public scripts
+cd - >/dev/null
+
+# 6) Print result
+PACKAGE_PATH="$OUTPUT_DIR/$PACKAGE_NAME"
+echo "[package] Created: $PACKAGE_PATH"
+echo "[package] To deploy:"
+echo "  1) copy the tar.gz to server and extract, e.g.:"
+echo "     tar -xzf $PACKAGE_NAME -C /opt/pdfchatbot"
+echo "  2) run:"
+echo "     cd /opt/pdfchatbot && PORT=3000 NODE_ENV=production bash scripts/run-standalone.sh"
