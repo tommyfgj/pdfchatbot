@@ -34,8 +34,8 @@ mkdir -p "$OUTPUT_DIR"
 # 4) Create tarball including run script
 TMP_STAGE="$(mktemp -d)"
 mkdir -p "$TMP_STAGE/.next/standalone/.next" "$TMP_STAGE/.next/standalone/public" "$TMP_STAGE/scripts"
-# copy standalone server
-cp -a .next/standalone "$TMP_STAGE/.next/standalone"
+# copy standalone server (avoid nested dir)
+cp -a .next/standalone/. "$TMP_STAGE/.next/standalone"
 # place static inside standalone/.next/static
 cp -a .next/static "$TMP_STAGE/.next/standalone/.next/static"
 # place public inside standalone/public
