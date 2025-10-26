@@ -49,6 +49,9 @@ SUMMARY.md
 TEST_ORIGINAL_TEXT_TAG.md
 test-sidebar-toggle.html
 
+# build outputs copied from submodule (do not commit)
+public/pdfjs-annotation-extension/
+
 # temporary files
 package.tmp.json
 annotations.db
