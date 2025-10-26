@@ -33,17 +33,22 @@ mkdir -p "$OUTPUT_DIR"
 
 # 4) Create tarball including run script
 TMP_STAGE="$(mktemp -d)"
-mkdir -p "$TMP_STAGE/.next" "$TMP_STAGE/scripts"
+mkdir -p "$TMP_STAGE/.next/standalone/.next" "$TMP_STAGE/.next/standalone/public" "$TMP_STAGE/scripts"
+# copy standalone server
 cp -a .next/standalone "$TMP_STAGE/.next/standalone"
-cp -a .next/static "$TMP_STAGE/.next/static"
-cp -a public "$TMP_STAGE/public"
-# include run script
+# place static inside standalone/.next/static
+cp -a .next/static "$TMP_STAGE/.next/standalone/.next/static"
+# place public inside standalone/public
+cp -a public/. "$TMP_STAGE/.next/standalone/public/"
+# include run script at root scripts/
 cp -a scripts/run-standalone.sh "$TMP_STAGE/scripts/run-standalone.sh"
 chmod +x "$TMP_STAGE/scripts/run-standalone.sh"
 
 # 5) Package
 cd "$TMP_STAGE"
-tar -czf "$OUTPUT_DIR/$PACKAGE_NAME" .next public scripts
+# Only need .next/standalone and scripts in the tarball
+# (standalone already includes .next/static and public inside)
+tar -czf "$OUTPUT_DIR/$PACKAGE_NAME" .next/standalone scripts
 cd - >/dev/null
 
 # 6) Print result
