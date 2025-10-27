@@ -40,9 +40,11 @@ cp -a .next/standalone/. "$TMP_STAGE/.next/standalone"
 cp -a .next/static "$TMP_STAGE/.next/standalone/.next/static"
 # place public inside standalone/public
 cp -a public/. "$TMP_STAGE/.next/standalone/public/"
-# include run script at root scripts/
+# include run script and deploy setup script at root scripts/
 cp -a scripts/run-standalone.sh "$TMP_STAGE/scripts/run-standalone.sh"
+cp -a scripts/deploy-setup.sh "$TMP_STAGE/scripts/deploy-setup.sh"
 chmod +x "$TMP_STAGE/scripts/run-standalone.sh"
+chmod +x "$TMP_STAGE/scripts/deploy-setup.sh"
 
 # 5) Package
 cd "$TMP_STAGE"
@@ -56,5 +58,7 @@ echo "[package] Created: $PACKAGE_PATH"
 echo "[package] To deploy:"
 echo "  1) copy the tar.gz to server and extract, e.g.:"
 echo "     tar -xzf $PACKAGE_NAME -C /opt/pdfchatbot"
-echo "  2) run:"
+echo "  2) setup native modules (required for better-sqlite3):"
+echo "     cd /opt/pdfchatbot && bash scripts/deploy-setup.sh"
+echo "  3) run:"
 echo "     cd /opt/pdfchatbot && PORT=3000 NODE_ENV=production bash scripts/run-standalone.sh"

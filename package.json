@@ -9,6 +9,8 @@
     "dev": "concurrently \"npm --workspace pdfjs-annotation-extension-src run dev\" \"next dev\"",
     "dev:web": "next dev",
     "dev:extension": "npm --workspace pdfjs-annotation-extension-src run dev",
+    "dev:with-oauth": "concurrently \"npm run mock-oauth2\" \"npm run dev\"",
+    "mock-oauth2": "node scripts/mock-oauth2-proxy.js",
     "build": "npm --workspace pdfjs-annotation-extension-src run build && next build",
     "start": "next start",
     "start:standalone": "NODE_ENV=production node .next/standalone/server.js",
